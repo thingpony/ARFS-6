@@ -40,12 +40,6 @@
 	var/list/forced_ambience = null
 	var/sound_env = STANDARD_STATION
 	var/turf/base_turf //The base turf type of the area, which can be used to override the z-level's base turf
-	var/global/global_uid = 0
-	var/uid
-
-/area/New()
-	uid = ++global_uid
-	..()
 
 /area/Initialize()
 	. = ..()
