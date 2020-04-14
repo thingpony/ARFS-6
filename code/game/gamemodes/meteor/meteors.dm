@@ -126,10 +126,14 @@
 	// Multiply this and the hits var to get a rough idea of how penetrating a meteor is.
 	var/wall_power = 100
 
+	var/spins = TRUE
+
 /obj/effect/meteor/Initialize()
 	. = ..()
 	z_original = z
 	GLOB.meteor_list += src
+	if(spins)
+		SpinAnimation()
 
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
@@ -151,10 +155,6 @@
 	walk(src,0) //this cancels the walk_towards() proc
 	GLOB.meteor_list -= src
 	return ..()
-
-/obj/effect/meteor/New()
-	..()
-	SpinAnimation()
 
 /obj/effect/meteor/Bump(atom/A)
 	if(attempt_vr(src,"Bump_vr",list(A))) return //VOREStation Edit - allows meteors to be deflected by baseball bats
@@ -332,3 +332,34 @@
 	..()
 	if(prob(20))
 		explosion(src.loc,2,4,6,8)
+
+// Missile!
+/obj/effect/meteor/missile
+	spins = FALSE
+	dropamt = 0
+
+/obj/effect/meteor/missile/exp
+	name = "he missile"
+	icon_state = "missile"
+	desc = "Incoming!"
+	wall_power = 400
+
+/obj/effect/meteor/missile/exp/meteor_effect(var/explode)
+	..()
+	if(explode)
+		explosion(src.loc, 1, 2, 3, 4, 0)
+
+// EMP Missile!
+/obj/effect/meteor/missile/emp
+	name = "emp missile"
+	icon_state = "missile_emp"
+	desc = "Hide your floppies!"
+	wall_power = 80
+	spins = FALSE
+
+/obj/effect/meteor/missile/emp/meteor_effect(var/explode)
+	..()
+	empulse(src, rand(1, 3), rand(2, 4), rand(3, 7), rand(5, 10))
+
+/obj/effect/meteor/missile/emp/get_shield_damage()
+	return ..() * rand(2,4)

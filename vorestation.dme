@@ -2924,6 +2924,7 @@
 #include "code\modules\overmap\ships\computers\sensors.dm"
 #include "code\modules\overmap\ships\computers\ship.dm"
 #include "code\modules\overmap\ships\computers\shuttle.dm"
+#include "code\modules\overmap\ships\computers\weapons.dm"
 #include "code\modules\overmap\ships\engines\engine.dm"
 #include "code\modules\overmap\ships\engines\gas_thruster.dm"
 #include "code\modules\overmap\ships\engines\ion_thruster.dm"
